@@ -1,17 +1,21 @@
-#AUTOCOMPATRA
+#AUTOCOMPARA
 
-#Limpiar area de trabajo
+#Clean workspace
 
 rm( list = ls() )
 
-#Cargar librerias
+#Load Libraries
 library( RSelenium )
 library( rvest )
 
-#Ejecutar si es la primera vez con Selenium
+#Run if it's the first time on Selenium
 #checkForServer()
 
+#Connect to a running server
 mybrowser <- remoteDriver(browserName="chrome")
+
+#Create a server
+#mybrowser <- startServer()
 
 mybrowser$open()
 
@@ -82,6 +86,6 @@ cap$sendKeysToElement( list('edomdn') )
 but<- mybrowser$findElement(using = 'xpath', '//*[@id="nodo"]/p[3]/input[2]')
 but$clickElement()
 
-#Obtener html fuente
+#Obtain source
 code <- mybrowser$getPageSource()
-page <- read_html(code[[1]]) #Convertir a xml
+page <- read_html(code[[1]])
