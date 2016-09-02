@@ -95,95 +95,8 @@ png("Autocompara//auto_captcha_crop.png")
 grid.raster(cap[60:110,390:580,])
 dev.off()
 
-##################################################################
-#Change colors and convert to tiff
-cap <- readPNG("Autocompara//auto_captcha_crop.png")
-png("Autocompara//auto_captcha_nocolor.png")
-grid.raster(cap[,,3])
-dev.off()
 
-########################################################
-library("gridExtra")
-
-# copy the image three times
-cap.R <- cap
-cap.G <- cap
-cap.B <- cap
-
-# zero out the non-contributing channels for each image copy
-cap.R[,,2:3] <- 0
-cap.G[,,1]   <- 0
-cap.G[,,3]   <- 0
-cap.B[,,1:2] <- 0
-
-# build the image grid
-img1 <- rasterGrob(cap.R)
-img2 <- rasterGrob(cap.G)
-img3 <- rasterGrob(cap.B)
-#grid.arrange(img1, img2, img3, nrow=1)
-
-# reshape image into a data frame
-df <- data.frame(
-  red = matrix(cap[,,1], ncol=1),
-  green = matrix(cap[,,2], ncol=1),
-  blue = matrix(cap[,,3], ncol=1)
-)
-
-### compute the k-means clustering
-K <- kmeans(df,3)
-df$label <- K$cluster
-
-### Replace the color of each pixel in the image with the mean 
-### R,G, and B values of the cluster in which the pixel resides:
-
-# get the coloring
-colors <- data.frame(
-  label = 1:nrow(K$centers), 
-  R = K$centers[,"red"],
-  G = K$centers[,"green"],
-  B = K$centers[,"blue"]
-)
-
-# merge color codes on to df
-# IMPORTANT: we must maintain the original order of the df after the merge!
-df$order <- 1:nrow(df)
-df <- merge(df, colors)
-df <- df[order(df$order),]
-df$order <- NULL
-
-# get mean color channel values for each row of the df.
-R = matrix(df$R, nrow=dim(cap)[1])
-G = matrix(df$G, nrow=dim(cap)[1])
-B = matrix(df$B, nrow=dim(cap)[1])
-
-# reconstitute the segmented image in the same shape as the input image
-cap.segmented <- array(dim=dim(cap))
-cap.segmented[,,1] <- R
-cap.segmented[,,2] <- G
-cap.segmented[,,3] <- B
-
-png("Autocompara//auto_captcha_proc.png")
-grid.raster(cap.segmented)
-dev.off()
-#######################################################
-
-
-
-
-#Use Tesseract to extract text from the tif image
-#Instructions for installing "ocR" can be found here:
-#https://github.com/greenore/ocR
-library(ocR)
-
-ocrTesseract("C:\\Users\\Jean\\Documents\\Autocompara",
-             "prueba.png",
-             "cap.txt")
-######################################################
-library(imager)
-
-captcha <- load.image("Autocompara//auto_captcha_crop.png")
-
-#####################################################
+system("python img_nocolor.py")
 
 system("python solve_captcha.py")
 
@@ -191,7 +104,7 @@ solved <- readLines("solved.txt")[1]
 
 #Captcha
 cap <- mybrowser$findElement(using = 'xpath', '//*[(@id = "uword")]')
-cap$sendKeysToElement( list('ijhnlp') )
+cap$sendKeysToElement( list(solved) )
 but<- mybrowser$findElement(using = 'xpath', '//*[@id="nodo"]/p[3]/input[2]')
 but$clickElement()
 
