@@ -84,14 +84,14 @@ cotizar <- mybrowser$findElement(using = 'xpath', '//*[(@id = "cotizar")]')
 cotizar$clickElement()
 
 #Save screenshot
-mybrowser$screenshot(file = "Autocompara//auto_captcha.png")
+mybrowser$screenshot(file = "auto_captcha.png")
 
 
 #Crop the captcha
 library(png)
 library(grid)
-cap <- readPNG("Autocompara//auto_captcha.png")
-png("Autocompara//auto_captcha_crop.png")
+cap <- readPNG("auto_captcha.png")
+png("auto_captcha_crop.png")
 grid.raster(cap[60:110,390:580,])
 dev.off()
 
