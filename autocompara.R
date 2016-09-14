@@ -4,9 +4,6 @@
 
 rm( list = ls() )
 
-#Set working space
-setwd("Autocompara")
-
 #Load Libraries
 library( RSelenium )
 library( rvest )
@@ -88,13 +85,6 @@ mybrowser$screenshot(file = "auto_captcha.png")
 
 
 #Crop the captcha
-library(png)
-library(grid)
-cap <- readPNG("auto_captcha.png")
-png("auto_captcha_crop.png")
-grid.raster(cap[60:110,390:580,])
-dev.off()
-
 
 system("python img_nocolor.py")
 
@@ -121,7 +111,7 @@ inbursa = mybrowser$executeScript("return document.getElementById('inbAnual').va
 mapfre = mybrowser$executeScript("return document.getElementById('mapAnual').value;")
 qualitas = mybrowser$executeScript("return document.getElementById('quaAnual').value;")
 zurich = mybrowser$executeScript("return document.getElementById('zurichAnual').value;")
-mybrowser.close()
+mybrowser$close()
 
 pre = list(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)
 prices <- unlist(pre)
