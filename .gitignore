@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+auto_captcha.png
+auto_captcha_crop.png
+auto_captcha_nocolor.gif
+phantomjsdriver.log

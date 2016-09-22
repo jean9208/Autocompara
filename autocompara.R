@@ -2,7 +2,6 @@
 
 #Load Libraries
 library(RSelenium)
-library(rvest)
 
 autocompara <- function(type, brand, model, description){
   
@@ -10,7 +9,7 @@ autocompara <- function(type, brand, model, description){
   #pJS <- phantom()
   
   #Run if it's the first time on Selenium
-  #checkForServer()
+  checkForServer()
   
   #Connect to a running server
   mybrowser <- remoteDriver(browserName="chrome")
@@ -24,7 +23,19 @@ autocompara <- function(type, brand, model, description){
   url <- "https://www.autocompara.com/ExpressoAutoCompara/index.htm"
   
   mybrowser$navigate(url)
+  Sys.sleep(5)
   
+  
+  ###
+  email <- "abcd@hotmail.com"
+  correo <- mybrowser$findElement(using = 'xpath', '//*[(@id = "eMail")]')
+  #correo$clickElement()
+  #correo$clearElement()
+  correo$sendKeysToElement( list(email))
+
+
+  #mybrowser$executeScript("document.getElementById('eMail').value='{0}';",email)
+  ###
   
   #Set Type
   #type <- "AUTOS"
@@ -55,7 +66,7 @@ autocompara <- function(type, brand, model, description){
   name <- "Jose"
   first_name <- "Aguilar"
   last_name <- "Mendoza"
-  email <- "aaa@hotmail.com"
+  #email <- "aaa@hotmail.com"
   cel <- "5556566778"
   
   nombre <- mybrowser$findElement(using = 'xpath', '//*[(@id = "nombre")]')
@@ -64,8 +75,10 @@ autocompara <- function(type, brand, model, description){
   primer_apellido$sendKeysToElement( list(first_name) )
   segundo_apellido <- mybrowser$findElement(using = 'xpath', '//*[(@id = "apMaterno")]')
   segundo_apellido$sendKeysToElement( list(last_name) )
-  correo <- mybrowser$findElement(using = 'xpath', '//*[(@id = "eMail")]')
-  correo$sendKeysToElement( list(email) )
+  #correo <- mybrowser$findElement(using = 'xpath', '//*[(@id = "eMail")]')
+  #correo$clickElement()
+  #correo$clearElement()
+  #correo$sendKeysToElement( list('aaa@hotmail.com') )
   celular <- mybrowser$findElement(using = 'xpath', '//*[(@id = "Cel")]')
   celular$sendKeysToElement( list(cel) )
   sexo <- mybrowser$findElement(using = "css", ".radio > label:nth-child(2)")
@@ -86,7 +99,7 @@ autocompara <- function(type, brand, model, description){
   #Cotizar
   cotizar <- mybrowser$findElement(using = 'xpath', '//*[(@id = "cotizar")]')
   cotizar$clickElement()
-  Sys.sleep(3)
+  Sys.sleep(5)
   
   #Save screenshot
   mybrowser$screenshot(file = "auto_captcha.png")
@@ -120,14 +133,13 @@ autocompara <- function(type, brand, model, description){
   mapfre = mybrowser$executeScript("return document.getElementById('mapAnual').value;")
   qualitas = mybrowser$executeScript("return document.getElementById('quaAnual').value;")
   zurich = mybrowser$executeScript("return document.getElementById('zurichAnual').value;")
-  mybrowser$close()
-  
+
   pre = list(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)
   prices <- unlist(pre)
   
   #Erase variables
   rm(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)
-  
+
   #Close webdriver
   
   mybrowser$close()
