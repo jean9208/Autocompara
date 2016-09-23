@@ -101,6 +101,9 @@ autocompara <- function(type, brand, model, description){
   cotizar$clickElement()
   Sys.sleep(5)
   
+  while(exists("plan")==F){
+    
+  
   #Save screenshot
   mybrowser$screenshot(file = "auto_captcha.png")
   
@@ -120,6 +123,11 @@ autocompara <- function(type, brand, model, description){
   but$clickElement()
   Sys.sleep(10)
   
+  
+  #Validation
+  try(plan <- mybrowser$findElement(using = 'xpath','//*[(@id = "plan")]'), T)
+  
+  }
   
   #Obtain prices through javascript
   
