@@ -142,8 +142,14 @@ autocompara <- function(type, brand, model, description){
   qualitas = mybrowser$executeScript("return document.getElementById('quaAnual').value;")
   zurich = mybrowser$executeScript("return document.getElementById('zurichAnual').value;")
 
-  pre = list(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)
-  prices <- unlist(pre)
+  #pre = list(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)
+  #prices <- unlist(pre)
+  
+  output <- c(ABA = aba, AIG = aig,
+              ATLAS = atlas, AXA = axa,
+              GNP = gnp, HDI = hdi,
+              INBURSA = inbursa, MAPFRE = mapfre,
+              QUALITAS = qualitas, ZURICH = zurich)
   
   #Erase variables
   rm(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)
@@ -155,7 +161,9 @@ autocompara <- function(type, brand, model, description){
   #Close phantomjs
   #pJS$stop()
   
-  return(prices)
+  
+  
+  return(output)
 }
 
 
