@@ -149,7 +149,7 @@ autocompara <- function(type, brand, model, description){
               ATLAS = atlas, AXA = axa,
               GNP = gnp, HDI = hdi,
               INBURSA = inbursa, MAPFRE = mapfre,
-              QUALITAS = qualitas, ZURICH = zurich)
+              QUALITAS = qualitas, ZURICH = zurich,DATE = as.character(as.Date(Sys.time())))
   
   #Erase variables
   rm(aba,aig,atlas,axa,gnp,hdi,inbursa,mapfre,qualitas,zurich)

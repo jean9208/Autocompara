@@ -23,16 +23,34 @@ names(cuam) <- c("TYPE","BRAND","MODEL","DESCRIPTION")
 
 #autocompara(type, brand, model, description)
 
-prices <-  apply(cuam, 1, function(x) autocompara(x["TYPE"],x["BRAND"], x["MODEL"], x["DESCRIPTION"]))
-prices_t <- t(prices)
-prices_t <- data.frame(prices_t)
+prices <- data.frame(matrix(NA,nrow(cuam),11))
 
-names(prices_t) <-  c("ABA", "AIG",
-                      "ATLAS", "AXA",
-                      "GNP", "HDI",
-                      "INBURSA", "MAPFRE",
-                      "QUALITAS", "ZURICH")
 
-cotizaciones <- cbind(cuam,prices_t)
+names(prices) <-  c("ABA", "AIG",
+                    "ATLAS", "AXA",
+                    "GNP", "HDI",
+                    "INBURSA", "MAPFRE",
+                    "QUALITAS", "ZURICH",
+                    "DATE")
+
+prices$DATE <- as.Date(prices$DATE)
+
+ind <- 63
+i=0
+
+while(i<= nrow(cuam)){
+
+for (i in ind+1:nrow(cuam)){
+  
+  cot <-  c(autocompara(cuam[i,"TYPE"], cuam[i,"BRAND"], 
+                      cuam[i,"MODEL"], cuam[i,"DESCRIPTION"]))
+
+
+  
+  prices[i,] <- cot
+  
+  ind <- i
+}
+}
 
 Sys.time() - init
