@@ -8,3 +8,7 @@ auto_captcha_nocolor.gif
 phantomjsdriver.log
 solved.txt
 prices.csv
+CUAM
+solve_captcha.py
+img_nocolor
+tesseract
