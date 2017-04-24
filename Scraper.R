@@ -38,6 +38,10 @@ prices$DATE <- as.Date(prices$DATE)
 ind <- 63
 i=0
 
+#Run docker container
+system("set_container.bat")
+
+
 while(i<= nrow(cuam)){
 
 for (i in ind+1:nrow(cuam)){
@@ -52,5 +56,8 @@ for (i in ind+1:nrow(cuam)){
   ind <- i
 }
 }
+
+#Close Docker container
+system("end_container.bat")
 
 Sys.time() - init

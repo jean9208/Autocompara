@@ -9,15 +9,18 @@ autocompara <- function(type, brand, model, description){
   #pJS <- phantom()
   
   #Run if it's the first time on Selenium
-  checkForServer()
+  #checkForServer()
   
   #Connect to a running server
-  mybrowser <- remoteDriver(browserName="chrome")
+  #mybrowser <- remoteDriver(browserName="chrome")
   #mybrowser <- remoteDriver(browserName="phantomjs")
+  mybrowser <- remoteDriver(remoteServerAddr = "192.168.99.100",
+                        port = 4445L)
   
   #Create a server (only for chromedriver)
-  startServer()
+  #startServer()
   
+  #Open browser
   mybrowser$open()
   
   url <- "https://www.autocompara.com/ExpressoAutoCompara/index.htm"
